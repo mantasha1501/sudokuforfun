@@ -2,15 +2,15 @@
 
 /* --- THEME COLOR CONFIGURATOR --- */
 :root {
-    --bg-screen: #EAE0CF;
-    --sidebar-bg: #111844;
-    --text-dark: #111844;
-    --accent-pink: #4B5694;
-    --accent-cyan: #7288AE;
-    --retro-green: #2e7d32;
-    --retro-red: #c62828;
-    --cell-empty: #fcfaf2;
-    --cell-fixed: #dcd3c3;
+    --bg-screen: #EAE0CF;       /* Main screen warm vintage cream */
+    --sidebar-bg: #111844;     /* Deep midnight navy sidebar */
+    --text-dark: #111844;      /* Main typography and sharp grid text */
+    --accent-pink: #4B5694;    /* Slate-purple operational buttons */
+    --accent-cyan: #7288AE;    /* Soft steel-blue cell focus overlays */
+    --retro-green: #2e7d32;    /* Success / Solved grid states */
+    --retro-red: #c62828;      /* Conflict / Error tracking states */
+    --cell-empty: #fcfaf2;     /* Enhanced bright interior cell body */
+    --cell-fixed: #dcd3c3;     /* Muted darker cream for locked starter cells */
 }
 
 * {
@@ -27,21 +27,20 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 10px;
+    padding: 20px;
 }
 
-/* Arcade CRT Screen Frame - Optimized for Mobile */
+/* Arcade CRT Screen Frame */
 .crt-screen {
     background-color: var(--bg-screen);
-    width: 95vw;
-    max-width: 1000px;
-    min-height: 80vh;
+    width: 100%;
+    max-width: 1100px;
+    min-height: 680px;
     border-radius: 12px;
-    border: 8px solid #111844;
+    border: 12px solid #111844;
     box-shadow: inset 0 0 40px rgba(0,0,0,0.15), 0 10px 30px rgba(0,0,0,0.5);
     display: flex;
-    flex-direction: column; /* Stacked by default for mobile */
-    overflow-y: auto;
+    overflow: hidden;
     position: relative;
 }
 
@@ -56,55 +55,64 @@ body {
     pointer-events: none;
 }
 
-/* Sidebar - Responsive */
+/* Sidebar Configurations */
 .sidebar {
-    width: 100%;
+    width: 230px;
     background-color: var(--sidebar-bg);
-    padding: 20px;
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    border-bottom: 4px solid #111844;
+    gap: 15px;
+    border-right: 4px solid #111844;
+    flex-shrink: 0;
 }
 
 .brand {
     font-family: 'VT323', monospace;
-    font-size: 28px;
+    font-size: 32px;
     color: var(--bg-screen);
     text-shadow: 2px 2px 0px #4B5694;
     text-decoration: none;
+    margin-bottom: 10px;
     letter-spacing: 0.5px;
 }
 
 .panel-label {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--accent-cyan);
     text-transform: uppercase;
+    margin-bottom: -10px;
     font-weight: bold;
+    letter-spacing: 1px;
 }
 
 .select-retro {
     font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
     padding: 6px;
     background: var(--bg-screen);
-    border: 2px solid #111844;
+    color: var(--sidebar-bg);
+    border: 3px solid #111844;
+    outline: none;
+    cursor: pointer;
     width: 100%;
+    font-weight: bold;
 }
 
 .timer-display {
     font-family: 'VT323', monospace;
-    font-size: 24px;
+    font-size: 28px;
     color: var(--bg-screen);
     background: #090d24;
-    padding: 5px;
+    padding: 8px;
     text-align: center;
     border: 2px solid var(--accent-pink);
 }
 
-/* Main Game Layout */
+/* Main Game Layout Frame */
 .game-main {
     flex-grow: 1;
-    padding: 20px;
+    padding: 30px 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -113,25 +121,22 @@ body {
 .top-row {
     width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
 }
 
 .game-title {
     font-family: 'VT323', monospace;
-    font-size: 28px;
+    font-size: 38px;
     color: var(--text-dark);
 }
 
-/* Hardware Sudoku Matrix - Fluid Grid */
+/* --- HARDWARE SUDOKU MATRIX --- */
 .sudoku-board {
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    width: 90vw;
-    max-width: 400px;
-    aspect-ratio: 1 / 1;
+    grid-template-columns: repeat(9, 48px);
+    grid-template-rows: repeat(9, 48px);
     border: 4px solid var(--text-dark);
     background-color: var(--text-dark);
     gap: 1px;
@@ -139,8 +144,8 @@ body {
 }
 
 .cell-container {
-    width: 100%;
-    height: 100%;
+    width: 48px;
+    height: 48px;
     background-color: var(--cell-empty);
     position: relative;
     cursor: pointer;
@@ -149,67 +154,154 @@ body {
     align-items: center;
 }
 
-.cell-container:nth-child(3n) { border-right: 2px solid var(--text-dark); }
+/* Thick dividers for the 3x3 blocks */
+.cell-container:nth-child(3n) { border-right: 3px solid var(--text-dark); }
 .cell-container:nth-child(9n) { border-right: none; }
+.sudoku-board > .cell-container:nth-child(n+19):nth-child(-n+27),
+.sudoku-board > .cell-container:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 3px solid var(--text-dark);
+}
 
 /* Visual States */
 .cell-container.selected { background-color: var(--accent-cyan) !important; }
+.cell-container.selected .cell-value { color: #fff; }
 .cell-container.fixed { background-color: var(--cell-fixed); cursor: not-allowed; }
+
+/* Error state shows a soft red cell tint and red typography text */
 .cell-container.invalid { background-color: #ffcdd2 !important; }
 .cell-container.invalid .cell-value { color: var(--retro-red) !important; }
 
-.cell-value {
-    font-size: 4vw; /* Scales with screen width */
-    font-weight: bold;
-    color: var(--text-dark);
+/* Interactive Hint Target Overlays */
+.cell-container.hint-target {
+    background-color: #fff59d !important;
+    box-shadow: inset 0 0 0 3px #fbc02d;
+}
+.cell-container.hint-target-peek {
+    background-color: #ffe082 !important;
+    box-shadow: inset 0 0 0 3px #f57c00;
 }
 
-.cell-container.fixed .cell-value { color: #4B5694 !important; }
+/* Core Typography Rules */
+.cell-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--text-dark); /* Color for active player inputs */
+    z-index: 2;
+}
 
-/* Pencil Notes */
+/* Locked starting clues explicitly pinned to a single color */
+.cell-container.fixed .cell-value { 
+    color: #4B5694 !important; 
+    opacity: 1 !important; 
+}
+
+.hint-peek-value {
+    color: #d84315 !important;
+    font-style: italic;
+}
+
+/* Pencil Note Grid Overlays */
 .notes-grid {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    padding: 1px;
+    grid-template-rows: repeat(3, 1fr);
+    padding: 2px;
     pointer-events: none;
 }
 
-.note-digit { font-size: 8px; color: #78909c; }
+.note-digit {
+    font-size: 9px;
+    color: #78909c;
+    text-align: center;
+    line-height: 14px;
+}
 
-/* Controls */
-.toolbar { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+/* --- CONTROLS & NUMPADS --- */
+.toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    justify-content: center;
+}
 
 .btn-action {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: bold;
     background-color: var(--accent-pink);
     color: #fff;
-    border: 2px solid var(--text-dark);
-    padding: 6px 10px;
+    border: 3px solid var(--text-dark);
+    padding: 8px 16px;
     cursor: pointer;
+    box-shadow: 3px 3px 0px var(--text-dark);
+}
+
+.btn-action:active, .btn-action.active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0px var(--text-dark);
+}
+
+.btn-action.active {
+    background-color: var(--accent-cyan);
+    color: #fff;
 }
 
 .numpad {
     display: flex;
-    gap: 5px;
+    gap: 8px;
+    background: rgba(17, 24, 68, 0.08);
     padding: 10px;
-    border: 2px solid var(--text-dark);
+    border: 3px solid var(--text-dark);
+    box-shadow: 4px 4px 0px var(--text-dark);
 }
 
 .num-btn {
-    width: 36px;
-    height: 36px;
-    font-size: 16px;
+    width: 42px;
+    height: 42px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 18px;
+    font-weight: bold;
     background: var(--cell-empty);
-    border: 1px solid var(--text-dark);
+    color: var(--text-dark);
+    border: 2px solid var(--text-dark);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
-/* Desktop override: Switch back to side-by-side */
-@media (min-width: 768px) {
-    .crt-screen { flex-direction: row; }
-    .sidebar { width: 250px; border-bottom: none; border-right: 4px solid var(--text-dark); }
-    .sudoku-board { max-width: 500px; }
-    .cell-value { font-size: 22px; }
+.num-btn.selected {
+    background-color: var(--accent-cyan);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.rem-count {
+    font-size: 9px;
+    color: #546e7a;
+    position: absolute;
+    bottom: 1px;
+}
+
+#status-box {
+    line-height: 1.4;
+    font-family: 'Share Tech Mono', monospace;
+    text-align: left;
+    padding: 12px;
+    min-height: 100px;
+    word-wrap: break-word;
+}
+
+/* Responsiveness for mobile screens */
+@media (max-width: 768px) {
+    .crt-screen { flex-direction: column; }
+    .sidebar { width: 100%; border-right: none; border-bottom: 4px solid var(--text-dark); }
+    .sudoku-board { grid-template-columns: repeat(9, 36px); grid-template-rows: repeat(9, 36px); }
+    .cell-container { width: 36px; height: 36px; }
+    .cell-value { font-size: 16px; }
+    .numpad { transform: scale(0.9); }
 }
