@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sudokuforfun</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="crt-screen">
+        <aside class="sidebar">
+            <a href="#" class="brand">sudokuforfun</a>
+            
+            <div class="panel-label">Difficulty</div>
+            <select class="select-retro" id="difficulty-select">
+                <option value="easy">EASY (45 Clues)</option>
+                <option value="medium">MEDIUM (33 Clues)</option>
+                <option value="hard">HARD CORE (24 Clues)</option>
+            </select>
+
+            <div class="panel-label">Time Elapsed</div>
+            <div class="timer-display" id="timer">00:00</div>
+
+            <button class="btn-action" id="btn-new" style="margin-top: 15px;">GENERATE NEW</button>
+            
+            <div class="panel-label" style="margin-top: 10px;">Terminal Output</div>
+            <div class="timer-display" id="status-box" style="font-size: 12px; background:#090d24; border-color: var(--accent-cyan); color: #fff;">SYSTEM ONLINE</div>
+        </aside>
+
+        <main class="game-main">
+            <div class="top-row">
+                <h1 class="game-title">sudokuforfun</h1>
+                <div class="toolbar">
+                    <button class="btn-action" id="btn-notes">NOTES: OFF</button>
+                    <button class="btn-action" id="btn-hint" style="background-color: var(--accent-cyan); color: #fff;">GET HINT</button>
+                    <button class="btn-action" id="btn-clear" style="background-color: #ef9a9a; color: #2d2d44;">CLEAR CELL</button>
+                </div>
+            </div>
+
+            <div class="sudoku-board" id="board"></div>
+
+            <div class="numpad" id="numpad"></div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
